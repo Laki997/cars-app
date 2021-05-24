@@ -17,8 +17,9 @@ export default {
     };
   },
 
-  created() {
-    this.cars = CarService.getAll();
+  async created() {
+    this.cars = await CarService.getAll();
+    console.log(this.cars);
   },
 };
 </script>

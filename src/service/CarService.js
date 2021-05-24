@@ -8,8 +8,20 @@ class CarService {
   }
   async getAll() {
     const { data } = await this.client.get("api/cars");
-    console.log(data);
+
     return data;
+  }
+
+  async add(newCar) {
+    await this.client.post("api/cars", {
+      brand: newCar.brand,
+      model: newCar.model,
+      year: newCar.year,
+      maxSpeed: newCar.maxSpeed,
+      numberOfDoors: newCar.numberOfDoors,
+      isAutomatic: newCar.isAutomatic,
+      engine: newCar.engine,
+    });
   }
 }
 export default new CarService();

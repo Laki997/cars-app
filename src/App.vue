@@ -3,6 +3,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <router-link class="navbar-brand" to="/cars">Cars</router-link>
+        <router-link class="navbar-brand" to="/add">Add</router-link>
       </nav>
     </div>
 
