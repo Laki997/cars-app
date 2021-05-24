@@ -1,9 +1,11 @@
 <template>
   <div>
-    <form @submit.prevent="add">
+    <form>
+      <br />
+      <br />
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Brand</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
@@ -16,7 +18,7 @@
         <label for="inputPassword3" class="col-sm-2 col-form-label"
           >Model</label
         >
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input
             type="text"
             class="form-control"
@@ -30,7 +32,7 @@
         <label for="inputEmail3" class="col-sm-2 col-form-label"
           >Max speed</label
         >
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input
             type="number"
             class="form-control"
@@ -44,7 +46,7 @@
         <label for="inputPassword3" class="col-sm-2 col-form-label"
           >Number of doors</label
         >
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input
             type="number"
             class="form-control"
@@ -54,9 +56,9 @@
           />
         </div>
       </div>
-      <div class="form-group rov">
-        <div class="form-group col-sm-10">
-          <label for="inputState">Year</label>
+      <div class="form-group row">
+        <label for="inputState" class="col-sm-2 col-form-label">Year</label>
+        <div class="form-group col-sm-8">
           <select v-model="newCar.year" class="form-control">
             <option v-for="year in yearsOfCar" :key="year">{{ year }}</option>
           </select>
@@ -65,7 +67,7 @@
       <fieldset class="form-group">
         <div class="row">
           <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -126,7 +128,7 @@
 
       <div class="form-group row">
         <div class="col-sm-2">Checkbox</div>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <div class="form-check">
             <input
               class="form-check-input"
@@ -141,9 +143,14 @@
         </div>
       </div>
       <div class="form-group row">
-        <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary">Add</button>
+        <div class="col-sm-8">
+          <button @click="add" class="btn btn-success btn-lg">
+            Add
+          </button>
         </div>
+        <button class="btn btn-warning btn-lg" id="btn" @click="reset">
+          Reset
+        </button>
       </div>
     </form>
   </div>
@@ -199,6 +206,14 @@ export default {
   },
 
   methods: {
+    reset() {
+      let button = document.querySelector("btn");
+      let inputs = document.querySelectorAll("inputs");
+      button.addEventListener("click", function() {
+        inputs.forEach((input) => (input.value = ""));
+      });
+    },
+
     add: function() {
       CarService.add(this.newCar);
 
