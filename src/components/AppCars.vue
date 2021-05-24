@@ -4,6 +4,12 @@
       {{
         car.brand
       }}
+      {{
+        car.year
+      }}
+      {{
+        car.engine
+      }}
     </ul>
   </div>
 </template>

@@ -11,6 +11,7 @@
             class="form-control"
             v-model="newCar.brand"
             placeholder="Brand"
+            id="brand"
           />
         </div>
       </div>
@@ -24,6 +25,7 @@
             class="form-control"
             placeholder="Model"
             v-model="newCar.model"
+            id="model"
           />
         </div>
       </div>
@@ -36,9 +38,9 @@
           <input
             type="number"
             class="form-control"
-            id="inputEmail3"
             placeholder="Max speed"
             v-model="newCar.maxSpeed"
+            id="maxSpeed"
           />
         </div>
       </div>
@@ -50,7 +52,7 @@
           <input
             type="number"
             class="form-control"
-            id="inputPassword3"
+            id="numberOfDoors"
             placeholder="Number of doors"
             v-model="newCar.numberOfDoors"
           />
@@ -60,7 +62,9 @@
         <label for="inputState" class="col-sm-2 col-form-label">Year</label>
         <div class="form-group col-sm-8">
           <select v-model="newCar.year" class="form-control">
-            <option v-for="year in yearsOfCar" :key="year">{{ year }}</option>
+            <option id="year" v-for="year in yearsOfCar" :key="year">{{
+              year
+            }}</option>
           </select>
         </div>
       </div>
@@ -73,7 +77,7 @@
                 class="form-check-input"
                 type="radio"
                 name="gridRadios"
-                id="diesel"
+                id="motor"
                 value="diesel"
                 v-model="newCar.engine"
                 checked
@@ -87,7 +91,7 @@
                 class="form-check-input"
                 type="radio"
                 name="gridRadios"
-                id="petrol"
+                id="motor"
                 value="petrol"
                 v-model="newCar.engine"
                 checked
@@ -101,7 +105,7 @@
                 class="form-check-input"
                 type="radio"
                 name="gridRadios"
-                id="electric"
+                id="motor"
                 v-model="newCar.engine"
                 value="electric"
               />
@@ -114,7 +118,7 @@
                 class="form-check-input"
                 type="radio"
                 name="gridRadios"
-                id="hybrid"
+                id="motor"
                 v-model="newCar.engine"
                 value="hybrid"
               />
@@ -134,7 +138,7 @@
               class="form-check-input"
               v-model="newCar.isAutomatic"
               type="checkbox"
-              id="gridCheck1"
+              id="isAutomatic"
             />
             <label class="form-check-label" for="gridCheck1">
               Is Automatic
@@ -150,6 +154,9 @@
         </div>
         <button class="btn btn-warning btn-lg" id="btn" @click="reset">
           Reset
+        </button>
+        <button class="btn btn-primary btn-lg" id="btn" @click="formAlert">
+          Preview
         </button>
       </div>
     </form>
@@ -218,6 +225,38 @@ export default {
       CarService.add(this.newCar);
 
       this.$router.push({ name: "cars" });
+    },
+
+    formAlert() {
+      let alert_string = "";
+      alert_string =
+        alert_string + "Brand: " + document.getElementById("brand").value;
+      alert_string = alert_string + ", \n";
+      alert_string =
+        alert_string + "Model: " + document.getElementById("model").value;
+      alert_string = alert_string + ", \n";
+      alert_string =
+        alert_string +
+        "Max Speed: " +
+        document.getElementById("maxSpeed").value;
+      alert_string = alert_string + ", \n";
+      alert_string =
+        alert_string +
+        "Number of Doors: " +
+        document.getElementById("numberOfDoors").value;
+      alert_string = alert_string + ", \n";
+      alert_string =
+        alert_string +
+        "Is automatic: " +
+        document.getElementById("isAutomatic").value;
+      alert_string = alert_string + ", \n";
+      alert_string = alert_string + "Vrsta motora: " + this.newCar.engine;
+      // document.getElementById("motor").value;
+      alert_string = alert_string + ", \n";
+      alert_string = alert_string + "Godina proizvodnje: " + this.newCar.year;
+      // document.getElementById("year").value;
+
+      alert(alert_string);
     },
   },
 };
