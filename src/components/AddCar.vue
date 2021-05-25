@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="singleCar !== ''">
-      <form name="form" @submit.prevent="validateForm">
+      <form name="form">
         <br />
         <br />
         <div class="form-group row">
@@ -182,7 +182,7 @@
 
     <!-- Ovo gore je forma za edit dole za add -->
 
-    <form v-else name="form" @submit.prevent="validateForm">
+    <form v-else name="form">
       <br />
       <br />
       <div class="form-group row">
@@ -469,17 +469,17 @@ export default {
       alert(alert_string);
     },
 
-    validateForm() {
-      var x = document.querySelector("brand");
-      var y = document.querySelector("model");
+    // validateForm() {
+    //   var x = document.querySelector("brand");
+    //   var y = document.querySelector("model");
 
-      if (x == "") {
-        alert("Name must be filled out");
-      } else if (y == "") {
-        alert("Name must be filled out");
-      }
-      return false;
-    },
+    //   if (x == "") {
+    //     alert("Name must be filled out");
+    //   } else if (y == "") {
+    //     alert("Name must be filled out");
+    //   }
+    //   return false;
+    // },
   },
 
   async created() {
