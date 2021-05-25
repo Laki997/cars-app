@@ -2,7 +2,7 @@
   <div>
     <br />
     <br />
-    <ul v-for="car in cars" :key="car.id">
+    <ul v-for="(car, index) in cars" :key="index">
       {{
         car.brand
       }}
@@ -15,7 +15,7 @@
       <router-link :to="`/edit/${car.id}`" tag="button" class="btn btn-primary"
         >Edit</router-link
       >
-      <button class="btn btn-danger" @click="deleteCar(car.id)">
+      <button class="btn btn-danger" @click="deleteCar(index)">
         Delete
       </button>
     </ul>
@@ -32,9 +32,10 @@ export default {
   },
 
   methods: {
-    deleteCar(id) {
-      CarService.delete(id);
-
+    deleteCar(index) {
+      CarService.delete(index);
+      console.log(index);
+      this.cars.splice(index, 1);
       console.log(this.cars);
     },
   },

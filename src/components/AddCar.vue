@@ -182,7 +182,7 @@
 
     <!-- Ovo gore je forma za edit dole za add -->
 
-    <form name="form" @submit.prevent="displayAddOrEdit">
+    <form name="form" @submit.prevent="displayEditOrAdd">
       <br />
       <br />
       <div class="form-group row">
@@ -463,12 +463,14 @@ export default {
       alert(alert_string);
     },
 
-    displayAddOrEdit() {
+    displayEditOrAdd() {
       if (this.addOrEdit) {
-        CarService.edit(this.id, this.newCar);
-        console.log(this.newCar);
+        let data = CarService.edit(this.id, this.newCar);
+
+        data.then(this.$router.push({ name: "cars" }));
       } else {
-        CarService.add(this.newCar);
+        let data = CarService.add(this.newCar);
+        data.then(this.$router.push({ name: "cars" }));
       }
     },
   },
