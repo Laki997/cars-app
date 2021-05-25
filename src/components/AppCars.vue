@@ -15,6 +15,9 @@
       <router-link :to="`/edit/${car.id}`" tag="button" class="btn btn-primary"
         >Edit</router-link
       >
+      <button class="btn btn-danger" @click="deleteCar(car.id)">
+        Delete
+      </button>
     </ul>
   </div>
 </template>
@@ -26,6 +29,14 @@ export default {
     return {
       cars: "",
     };
+  },
+
+  methods: {
+    deleteCar(id) {
+      CarService.delete(id);
+
+      this.$router.push({ name: "cars" });
+    },
   },
 
   async created() {

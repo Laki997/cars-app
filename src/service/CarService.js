@@ -41,5 +41,9 @@ class CarService {
       engine: car.engine,
     });
   }
+
+  async delete(id) {
+    await this.client.delete(`api/cars/${id}`);
+  }
 }
 export default new CarService();

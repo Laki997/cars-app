@@ -183,7 +183,6 @@
     <!-- Ovo gore je forma za edit dole za add -->
 
     <form v-else name="form" @submit.prevent="validateForm">
-      <h2>caooo</h2>
       <br />
       <br />
       <div class="form-group row">
