@@ -338,6 +338,7 @@
               id="isAutomatic"
               name="isAutomatic"
               required
+              value="false"
             />
             <label class="form-check-label" for="gridCheck1">
               Is Automatic
