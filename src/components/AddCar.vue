@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="singleCar !== ''">
-      <form name="form">
+    <!-- <div v-if="singleCar !== ''">
+      <form name="form" @submit.prevent="add">
         <br />
         <br />
         <div class="form-group row">
@@ -178,11 +178,11 @@
           </button>
         </div>
       </form>
-    </div>
+    </div> -->
 
     <!-- Ovo gore je forma za edit dole za add -->
 
-    <form v-else name="form">
+    <form name="form" @submit.prevent="displayAddOrEdit">
       <br />
       <br />
       <div class="form-group row">
@@ -196,6 +196,7 @@
             id="brand"
             name="brand"
             required
+            minlength="2"
           />
         </div>
       </div>
@@ -205,13 +206,14 @@
         >
         <div class="col-sm-8">
           <input
-            type="texts"
+            type="text"
             class="form-control"
             placeholder="Model"
             v-model="newCar.model"
             id="model"
             name="brand"
             required
+            minlength="2"
           />
         </div>
       </div>
@@ -338,7 +340,7 @@
               id="isAutomatic"
               name="isAutomatic"
               required
-              value="false"
+              checked="false"
             />
             <label class="form-check-label" for="gridCheck1">
               Is Automatic
@@ -348,9 +350,24 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-8">
-          <button type="submit" @click="add" class="btn btn-success btn-lg">
-            Add
-          </button>
+          <div v-if="addOrEdit">
+            <button
+              type="submit"
+              id="btnAddOrEdit"
+              class="btn btn-success btn-lg"
+            >
+              Edit
+            </button>
+          </div>
+          <div v-else>
+            <button
+              type="submit"
+              id="btnAddOrEdit"
+              class="btn btn-success btn-lg"
+            >
+              Add
+            </button>
+          </div>
         </div>
         <button class="btn btn-warning btn-lg" id="btn" @click="reset">
           Reset
@@ -417,75 +434,58 @@ export default {
 
   methods: {
     reset() {
-      let button = document.querySelector("btn");
-      let inputs = document.querySelectorAll("inputs");
-      button.addEventListener("click", function() {
-        inputs.forEach((input) => (input.value = ""));
-      });
-    },
-
-    add: function() {
-      CarService.add(this.newCar);
-
-      this.$router.push({ name: "cars" });
-    },
-
-    edit: function() {
-      CarService.edit(this.id, this.singleCar);
-
-      console.log(this.singleCar);
-
-      this.$router.push({ name: "cars" });
+      this.newCar.brand = "";
+      this.newCar.model = "";
+      this.newCar.year = "";
+      this.newCar.maxSpeed = "";
+      this.newCar.isAutomatic = "";
+      (this.newCar.numberOfDoors = ""), (this.newCar.engine = "");
     },
 
     formAlert() {
       let alert_string = "";
-      alert_string =
-        alert_string + "Brand: " + document.getElementById("brand").value;
+      alert_string = alert_string + "Brand: " + this.newCar.brand;
+      alert_string = alert_string + ", \n";
+      alert_string = alert_string + "Model: " + this.newCar.model;
+      alert_string = alert_string + ", \n";
+      alert_string = alert_string + "Max Speed: " + this.newCar.maxSpeed;
       alert_string = alert_string + ", \n";
       alert_string =
-        alert_string + "Model: " + document.getElementById("model").value;
+        alert_string + "Number of Doors: " + this.newCar.numberOfDoors;
       alert_string = alert_string + ", \n";
-      alert_string =
-        alert_string +
-        "Max Speed: " +
-        document.getElementById("maxSpeed").value;
-      alert_string = alert_string + ", \n";
-      alert_string =
-        alert_string +
-        "Number of Doors: " +
-        document.getElementById("numberOfDoors").value;
-      alert_string = alert_string + ", \n";
-      alert_string =
-        alert_string +
-        "Is automatic: " +
-        document.getElementById("isAutomatic").value;
+      alert_string = alert_string + "Is automatic: " + this.newCar.isAutomatic;
       alert_string = alert_string + ", \n";
       alert_string = alert_string + "Vrsta motora: " + this.newCar.engine;
-      // document.getElementById("motor").value;
+
       alert_string = alert_string + ", \n";
       alert_string = alert_string + "Godina proizvodnje: " + this.newCar.year;
-      // document.getElementById("year").value;
 
       alert(alert_string);
     },
 
-    // validateForm() {
-    //   var x = document.querySelector("brand");
-    //   var y = document.querySelector("model");
-
-    //   if (x == "") {
-    //     alert("Name must be filled out");
-    //   } else if (y == "") {
-    //     alert("Name must be filled out");
-    //   }
-    //   return false;
-    // },
+    displayAddOrEdit() {
+      if (this.addOrEdit) {
+        CarService.edit(this.id, this.newCar);
+        console.log(this.newCar);
+      } else {
+        CarService.add(this.newCar);
+      }
+    },
   },
 
   async created() {
     let singleCar = await CarService.get(this.id);
-    this.singleCar = singleCar;
+    this.newCar = singleCar;
+  },
+  computed: {
+    addOrEdit: function() {
+      console.log(this.id);
+      if (this.id) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };
 </script>

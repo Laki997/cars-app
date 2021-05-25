@@ -35,7 +35,7 @@ export default {
     deleteCar(id) {
       CarService.delete(id);
 
-      this.$router.push({ name: "cars" });
+      console.log(this.cars);
     },
   },
 
