@@ -1,5 +1,7 @@
 <template>
   <div>
+    <br />
+    <br />
     <ul v-for="car in cars" :key="car.id">
       {{
         car.brand
@@ -10,6 +12,9 @@
       {{
         car.engine
       }}
+      <router-link :to="`/edit/${car.id}`" tag="button" class="btn btn-primary"
+        >Edit</router-link
+      >
     </ul>
   </div>
 </template>
@@ -25,7 +30,6 @@ export default {
 
   async created() {
     this.cars = await CarService.getAll();
-    console.log(this.cars);
   },
 };
 </script>

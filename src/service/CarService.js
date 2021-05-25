@@ -23,5 +23,11 @@ class CarService {
       engine: newCar.engine,
     });
   }
+
+  async get(id) {
+    const { data } = await this.client.get(`api/cars/${id}`);
+
+    return data;
+  }
 }
 export default new CarService();
