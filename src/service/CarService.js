@@ -29,5 +29,17 @@ class CarService {
 
     return data;
   }
+
+  async edit(id, car) {
+    await this.client.put(`api/cars/${id}`, {
+      brand: car.brand,
+      model: car.model,
+      year: car.year,
+      maxSpeed: car.maxSpeed,
+      numberOfDoors: car.numberOfDoors,
+      isAutomatic: car.isAutomatic,
+      engine: car.engine,
+    });
+  }
 }
 export default new CarService();

@@ -166,8 +166,8 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-8">
-            <button type="submit" @click="add" class="btn btn-success btn-lg">
-              Add
+            <button type="submit" @click="edit" class="btn btn-success btn-lg">
+              Edit
             </button>
           </div>
           <button class="btn btn-warning btn-lg" id="btn" @click="reset">
@@ -426,6 +426,14 @@ export default {
 
     add: function() {
       CarService.add(this.newCar);
+
+      this.$router.push({ name: "cars" });
+    },
+
+    edit: function() {
+      CarService.edit(this.id, this.singleCar);
+
+      console.log(this.singleCar);
 
       this.$router.push({ name: "cars" });
     },
