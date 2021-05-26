@@ -182,7 +182,7 @@
 
     <!-- Ovo gore je forma za edit dole za add -->
 
-    <form name="form" @submit.prevent="displayEditOrAdd">
+    <form name="form" @submit.prevent="submitCar">
       <br />
       <br />
       <div class="form-group row">
@@ -372,11 +372,11 @@
         <button class="btn btn-warning btn-lg" id="btn" @click="reset">
           Reset
         </button>
-        <button class="btn btn-primary btn-lg" id="btn" @click="formAlert">
-          Preview
-        </button>
       </div>
     </form>
+    <button class="btn btn-primary btn-lg" id="btn" @click="formAlert">
+      Preview
+    </button>
   </div>
 </template>
 
@@ -463,21 +463,24 @@ export default {
       alert(alert_string);
     },
 
-    displayEditOrAdd() {
+    async submitCar() {
       if (this.addOrEdit) {
-        let data = CarService.edit(this.id, this.newCar);
+        await CarService.edit(this.id, this.newCar);
 
-        data.then(this.$router.push({ name: "cars" }));
+        this.$router.push({ name: "cars" });
       } else {
-        let data = CarService.add(this.newCar);
-        data.then(this.$router.push({ name: "cars" }));
+        await CarService.add(this.newCar);
+        this.$router.push({ name: "cars" });
       }
     },
   },
 
   async created() {
-    let singleCar = await CarService.get(this.id);
-    this.newCar = singleCar;
+    if (this.id) {
+      let singleCar = await CarService.get(this.id);
+      this.newCar = singleCar;
+    }
+    return;
   },
   computed: {
     addOrEdit: function() {
