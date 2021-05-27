@@ -369,9 +369,16 @@
             </button>
           </div>
         </div>
-        <button class="btn btn-warning btn-lg" id="btn" @click="reset">
+        <button class="btn btn-warning btn-lg" id="btn" @click="prikaziDialog">
           Reset
         </button>
+        <DialogReset
+          :show="showDialog"
+          :cancel="cancel"
+          :confirm="confirm"
+          :title="title"
+          :description="description"
+        />
       </div>
     </form>
     <button class="btn btn-primary btn-lg" id="btn" @click="formAlert">
@@ -381,9 +388,11 @@
 </template>
 
 <script>
+import DialogReset from "../components/DialogReset.vue";
 import CarService from "../service/CarService.js";
 export default {
   props: ["id"],
+  components: { DialogReset },
   data() {
     return {
       yearsOfCar: [
@@ -429,6 +438,9 @@ export default {
       },
 
       singleCar: "",
+      showDialog: false,
+      title: "Reset to defaukt?",
+      description: "Are you sure you want to reset to default?",
     };
   },
 
@@ -440,6 +452,18 @@ export default {
       this.newCar.maxSpeed = "";
       this.newCar.isAutomatic = "";
       (this.newCar.numberOfDoors = ""), (this.newCar.engine = "");
+    },
+
+    prikaziDialog() {
+      this.showDialog = true;
+    },
+
+    cancel() {
+      this.showDialog = false;
+    },
+    confirm() {
+      this.reset();
+      this.showDialog = false;
     },
 
     formAlert() {
